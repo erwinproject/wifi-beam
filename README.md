@@ -112,6 +112,18 @@ Aplikasi akan berjalan di:
 http://localhost:3000
 ```
 
+WebSocket signaling memakai port `3001`. Endpoint `/api/ws` perlu diakses sekali setelah aplikasi berjalan untuk menyalakan signaling server:
+
+```text
+http://localhost:3000/api/ws
+```
+
+Setelah aktif, WebSocket dapat diakses melalui:
+
+```text
+ws://localhost:3001
+```
+
 Lihat log container:
 
 ```bash
@@ -129,6 +141,8 @@ Konfigurasi default di `docker-compose.yml` membatasi RAM container ke `512 MB`:
 ```yaml
 mem_limit: 512m
 environment:
+  WS_PORT: 3001
+  NEXT_PUBLIC_WS_URL: ws://localhost:3001
   NODE_OPTIONS: --max-old-space-size=384
 ```
 
