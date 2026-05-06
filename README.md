@@ -154,7 +154,7 @@ MEM_LIMIT=512m
 NODE_OPTIONS=--max-old-space-size=384
 ```
 
-`NEXT_PUBLIC_WS_URL` dibaca dari `.env` lalu dikirim sebagai build arg karena nilainya dibaca frontend saat `next build`. Setelah mengubah `NEXT_PUBLIC_WS_URL`, jalankan ulang build dengan `docker compose up -d --build`. `MEM_LIMIT` membatasi RAM container Docker, sedangkan `NODE_OPTIONS` membatasi heap Node.js agar tidak memakai seluruh limit RAM container.
+`NEXT_PUBLIC_WS_URL` dibaca dari `.env`, dikirim sebagai build arg untuk frontend, dan dipakai juga oleh runtime response `/api/ws`. Setelah mengubah `NEXT_PUBLIC_WS_URL`, jalankan ulang build dengan `docker compose up -d --build`. `MEM_LIMIT` membatasi RAM container Docker, sedangkan `NODE_OPTIONS` membatasi heap Node.js agar tidak memakai seluruh limit RAM container.
 
 Jika server memiliki RAM kecil, nilai ini bisa diturunkan, misalnya:
 
