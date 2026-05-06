@@ -1,0 +1,13 @@
+services:
+  app:
+    build: .
+    container_name: wifi-share-app
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      NODE_OPTIONS: --max-old-space-size=384
+    mem_limit: 512m
+    restart: unless-stopped
