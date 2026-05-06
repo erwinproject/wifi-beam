@@ -10,7 +10,7 @@ services:
       PORT: 3000
       HOSTNAME: 0.0.0.0
       WS_PORT: 3001
-      NEXT_PUBLIC_WS_URL: ws://localhost:3001
+      NEXT_PUBLIC_WS_URL: wss://air-ws.cains.id
       NODE_OPTIONS: --max-old-space-size=384
     mem_limit: 512m
     restart: unless-stopped
