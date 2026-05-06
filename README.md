@@ -45,9 +45,8 @@ NEXT_PUBLIC_WS_URL="ws://localhost:3001"
 Untuk production dengan HTTPS dan reverse proxy:
 
 ```env
-APP_PASSWORD="surabaya"
 WS_PORT="3001"
-NEXT_PUBLIC_WS_URL="wss://air-ws.cains.id"
+NEXT_PUBLIC_WS_URL="wss://ws.example.com"
 ```
 
 `NEXT_PUBLIC_WS_URL` dibaca oleh frontend saat build. Setelah mengubah nilai ini, jalankan build ulang dan restart app.
@@ -106,7 +105,7 @@ Contoh `.env`:
 ```env
 APP_PORT=3000
 WS_PORT=3001
-NEXT_PUBLIC_WS_URL=wss://air-ws.cains.id
+NEXT_PUBLIC_WS_URL=wss://ws.example.com
 MEM_LIMIT=512m
 NODE_OPTIONS=--max-old-space-size=384
 ```
@@ -170,21 +169,21 @@ Pastikan Docker Desktop atau Docker Engine sudah berjalan sebelum menjalankan pe
 Contoh setup production:
 
 ```text
-air.cains.id     -> Next.js app port 3000
-air-ws.cains.id  -> WebSocket signaling port 3001
+app.example.com  -> Next.js app port 3000
+ws.example.com   -> WebSocket signaling port 3001
 ```
 
 DNS:
 
 ```text
-air.cains.id      A record / CNAME -> server
-air-ws.cains.id   A record / CNAME -> server
+app.example.com  A record / CNAME -> server
+ws.example.com   A record / CNAME -> server
 ```
 
 Proxy Host untuk aplikasi utama:
 
 ```text
-Domain Names: air.cains.id
+Domain Names: app.example.com
 Scheme: http
 Forward Hostname/IP: 127.0.0.1
 Forward Port: 3000
@@ -195,7 +194,7 @@ Force SSL: ON
 Proxy Host untuk WebSocket:
 
 ```text
-Domain Names: air-ws.cains.id
+Domain Names: ws.example.com
 Scheme: http
 Forward Hostname/IP: 127.0.0.1
 Forward Port: 3001
@@ -221,7 +220,7 @@ Jika Nginx Proxy Manager berjalan di Docker atau container terpisah, `127.0.0.1`
 Aktifkan signaling server:
 
 ```text
-https://air.cains.id/api/ws
+https://app.example.com/api/ws
 ```
 
 Response yang diharapkan:
@@ -229,7 +228,7 @@ Response yang diharapkan:
 ```json
 {
   "status": "WebRTC signaling server running",
-  "wsUrl": "wss://air-ws.cains.id"
+  "wsUrl": "wss://ws.example.com"
 }
 ```
 
@@ -242,15 +241,15 @@ ss -ltnp | grep 3001
 Tes WebSocket dari client:
 
 ```bash
-npx wscat -c wss://air-ws.cains.id
+npx wscat -c wss://ws.example.com
 ```
 
 Jika muncul error `WebSocket is closed before the connection is established`, cek hal berikut:
 
-- `air-ws.cains.id` sudah dibuat di DNS
-- Proxy Host `air-ws.cains.id` mengarah ke port `3001`, bukan `3000`
+- `ws.example.com` sudah dibuat di DNS
+- Proxy Host `ws.example.com` mengarah ke port `3001`, bukan `3000`
 - `Websockets Support` aktif di Nginx Proxy Manager
-- SSL aktif untuk `air-ws.cains.id`
+- SSL aktif untuk `ws.example.com`
 - Port `3001` sudah listen di server
 - App sudah rebuild setelah mengubah `NEXT_PUBLIC_WS_URL`
 
