@@ -99,6 +99,17 @@ File yang digunakan:
 - `Dockerfile`
 - `.dockerignore`
 - `docker-compose.yml`
+- `.env`
+
+Contoh `.env`:
+
+```env
+APP_PORT=3000
+WS_PORT=3001
+NEXT_PUBLIC_WS_URL=wss://air-ws.cains.id
+MEM_LIMIT=512m
+NODE_OPTIONS=--max-old-space-size=384
+```
 
 Build dan jalankan container:
 
@@ -136,24 +147,20 @@ Stop container:
 docker compose down
 ```
 
-Konfigurasi default di `docker-compose.yml` membatasi RAM container ke `512 MB`:
+Konfigurasi default di `.env` membatasi RAM container ke `512 MB`:
 
-```yaml
-mem_limit: 512m
-environment:
-  WS_PORT: 3001
-  NEXT_PUBLIC_WS_URL: ws://localhost:3001
-  NODE_OPTIONS: --max-old-space-size=384
+```env
+MEM_LIMIT=512m
+NODE_OPTIONS=--max-old-space-size=384
 ```
 
-`mem_limit` membatasi RAM container Docker, sedangkan `NODE_OPTIONS` membatasi heap Node.js agar tidak memakai seluruh limit RAM container.
+`NEXT_PUBLIC_WS_URL` dibaca dari `.env` lalu dikirim sebagai build arg karena nilainya dibaca frontend saat `next build`. Setelah mengubah `NEXT_PUBLIC_WS_URL`, jalankan ulang build dengan `docker compose up -d --build`. `MEM_LIMIT` membatasi RAM container Docker, sedangkan `NODE_OPTIONS` membatasi heap Node.js agar tidak memakai seluruh limit RAM container.
 
 Jika server memiliki RAM kecil, nilai ini bisa diturunkan, misalnya:
 
-```yaml
-mem_limit: 256m
-environment:
-  NODE_OPTIONS: --max-old-space-size=192
+```env
+MEM_LIMIT=256m
+NODE_OPTIONS=--max-old-space-size=192
 ```
 
 Pastikan Docker Desktop atau Docker Engine sudah berjalan sebelum menjalankan perintah `docker compose`.
