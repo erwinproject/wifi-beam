@@ -2,6 +2,7 @@ export interface ActiveDevice {
   id: string;
   name: string;
   ip: string;
+  networkKey: string;
   lastSeen: number;
   isHost: boolean;
   roomId?: string;
